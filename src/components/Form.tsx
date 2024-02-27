@@ -18,7 +18,7 @@ const Form = ({ categories }: { categories: Category[] }) => {
 
   return (
     <form className='w-full max-w-[400px] text-center' onSubmit={handleSubmit}>
-      <div className='flex flex-col gap-3'>
+      <div className='flex flex-col'>
         {categories.length === 0 ? (
           <p>No hay items cargados</p>
         ) : (

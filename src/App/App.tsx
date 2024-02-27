@@ -14,7 +14,17 @@ const App = () => {
   const [newId, setNewId] = useState(1)
   const [categories, setCategories] = useState<Category[]>([])
 
-  const newCategory = { id: newId, emoji: '🐐', name: 'LACABRA', items: [] }
+  const newCategory = {
+    id: newId,
+    emoji: '🐐',
+    name: 'LACABRA',
+    items: [
+      {
+        emoji: '🐐',
+        name: 'LACABRA'
+      }
+    ]
+  }
 
   const addCategory = () => {
     setCategories([...categories, newCategory])

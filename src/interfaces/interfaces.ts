@@ -5,5 +5,5 @@ export interface Item {
 
 export interface Category extends Item {
   id: number
-  // items: Item[]
+  items: Item[]
 }
