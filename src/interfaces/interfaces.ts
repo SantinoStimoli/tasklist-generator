@@ -1,8 +1,8 @@
-interface CategoryItem {
+export interface Item {
   name: string
   emoji: string
 }
 
-export interface Category extends CategoryItem {
-  items: CategoryItem[]
+export interface Category extends Item {
+  items: Item[]
 }
