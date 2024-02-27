@@ -1,10 +1,19 @@
 import { TextField } from '@mui/material'
 import { Item } from '../interfaces/interfaces'
-import { useState } from 'react'
+import { useContext, useState } from 'react'
+import { categoryOptionsContext } from '../App/App'
 
-const CategoryItem = ({ item }: { item: Item }) => {
+const CategoryItem = ({
+  item,
+  categoryId
+}: {
+  item: Item
+  categoryId: number
+}) => {
   const [emoji, setEmoji] = useState(item.emoji)
   const [name, setName] = useState(item.name)
+
+  const categoryOptions = useContext(categoryOptionsContext)
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = event.target.value
@@ -32,7 +41,12 @@ const CategoryItem = ({ item }: { item: Item }) => {
         className='col-span-3'
         placeholder='Título'
       />
-      <i className='bx bx-trash bx-sm form-icons'></i>
+      <i
+        onClick={() =>
+          categoryOptions?.deleteItemFromCategory(categoryId, item.id)
+        }
+        className='bx bx-trash bx-sm form-icons'
+      ></i>
     </div>
   )
 }

@@ -8,27 +8,43 @@ import { Button } from '@mui/material'
 export const categoryOptionsContext = createContext<null | {
   updateCategory: (id: number, newName: string, newEmoji: string) => void
   deleteCategory: (id: number) => void
+  addItemToCategory: (categoryId: number) => void
+  updateItemFromCategory: (
+    categoryId: number,
+    itemId: number,
+    newName: string,
+    newEmoji: string
+  ) => void
+  deleteItemFromCategory: (categoryId: number, itemId: number) => void
 }>(null)
 
 const App = () => {
-  const [newId, setNewId] = useState(1)
+  const [newCategoryId, setNewCategoryId] = useState(0)
+  const [newItemId, setNewItemId] = useState(1)
   const [categories, setCategories] = useState<Category[]>([])
 
   const newCategory = {
-    id: newId,
+    id: newCategoryId,
     emoji: '🐐',
     name: 'LACABRA',
     items: [
       {
+        id: 33,
         emoji: '🐐',
-        name: 'LACABRA'
+        name: 'sss'
+      },
+      {
+        id: 33 + 1,
+        emoji: '🐐',
+        name: '2222'
       }
     ]
   }
 
   const addCategory = () => {
     setCategories([...categories, newCategory])
-    setNewId(newId + 1)
+    setNewItemId(newItemId + 1)
+    setNewCategoryId(newCategoryId + 1)
   }
 
   const updateCategory = (id: number, newName: string, newEmoji: string) => {
@@ -55,10 +71,82 @@ const App = () => {
     })
   }
 
+  const addItemToCategory = (categoryId: number) => {
+    setCategories(prevCategories => {
+      const selectedCategoryIndex = prevCategories.findIndex(
+        category => category.id === categoryId
+      )
+
+      if (selectedCategoryIndex !== -1) {
+        const newCategories = [...prevCategories]
+        newCategories[selectedCategoryIndex] = {
+          ...newCategories[selectedCategoryIndex],
+          items: [
+            ...newCategories[selectedCategoryIndex].items,
+            {
+              id: newItemId,
+              emoji: '🐐',
+              name: 's'
+            }
+          ]
+        }
+
+        setNewItemId(prevItemId => prevItemId + 0.5)
+
+        return newCategories
+      }
+
+      return prevCategories
+    })
+  }
+
+  const updateItemFromCategory = (
+    categoryId: number,
+    itemId: number,
+    newName: string,
+    newEmoji: string
+  ) => {
+    console.log(categoryId, itemId, newName, newEmoji)
+  }
+
+  const deleteItemFromCategory = (categoryId: number, itemId: number) => {
+    setCategories(prevCategories => {
+      const selectedCategoryIndex = categories.findIndex(
+        category => category.id === categoryId
+      )
+
+      const selectedCategory = prevCategories[selectedCategoryIndex]
+
+      const selectedItemIndex = selectedCategory.items.findIndex(
+        item => item.id === itemId
+      )
+
+      if (selectedItemIndex !== -1) {
+        const newItems = selectedCategory.items.filter(
+          item => item.id !== itemId
+        )
+
+        selectedCategory.items = newItems
+        console.log(selectedCategory)
+
+        return prevCategories
+      }
+      return prevCategories
+    })
+  }
+
   useEffect(() => addCategory(), [])
 
   return (
-    <categoryOptionsContext.Provider value={{ updateCategory, deleteCategory }}>
+    <categoryOptionsContext.Provider
+      value={{
+        updateCategory,
+        deleteCategory,
+        addItemToCategory,
+        updateItemFromCategory,
+        deleteItemFromCategory
+      }}
+    >
       <main className='container mx-auto min-h-screen flex flex-col items-center py-10'>
         <h1 className='text-3xl uppercase font-bold'>Genera tu lista</h1>
         <Button

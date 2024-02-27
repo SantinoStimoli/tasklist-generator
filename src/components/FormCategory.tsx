@@ -16,14 +16,12 @@ const FormCategory = ({ category }: { category: Category }) => {
     if (event.target.name === 'name') setName(newValue)
   }
 
-  const addItem = () => {}
-
   useEffect(() => {
     categoryOptions?.updateCategory(category.id, name, emoji)
   }, [category.id, emoji, name, categoryOptions])
 
   return (
-    <div>
+    <>
       <div className='grid grid-cols-6 gap-1.5'>
         <TextField
           required
@@ -44,7 +42,9 @@ const FormCategory = ({ category }: { category: Category }) => {
         />
         <i
           className='bx bx-plus bx-sm form-icons'
-          onClick={() => addItem()}
+          onClick={() => {
+            categoryOptions?.addItemToCategory(category.id)
+          }}
         ></i>
         <i
           className='bx bx-trash bx-sm form-icons '
@@ -53,11 +53,11 @@ const FormCategory = ({ category }: { category: Category }) => {
       </div>
       <div className='flex flex-col gap-1 mt-1'>
         {category.items.map((item, i) => {
-          return <CategoryItem key={i} item={item} />
+          return <CategoryItem categoryId={category.id} key={i} item={item} />
         })}
       </div>
       <hr className='my-3 border-2' />
-    </div>
+    </>
   )
 }
 
