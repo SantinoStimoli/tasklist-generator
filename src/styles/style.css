@@ -1,3 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.form-icons {
+  @apply col-span-1 border border-black/20 hover:border-black rounded flex justify-center items-center cursor-pointer;
+}

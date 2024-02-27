@@ -1,10 +1,13 @@
 import { TextField } from '@mui/material'
+import { useContext, useEffect, useState } from 'react'
+import { categoryOptionsContext } from '../App/App'
 import { Category } from '../interfaces/interfaces'
-import { useState } from 'react'
 
-const FormCategory = ({ element }: { element: Category }) => {
-  const [emoji, setEmoji] = useState('')
-  const [name, setName] = useState('')
+const FormCategory = ({ category }: { category: Category }) => {
+  const [emoji, setEmoji] = useState(category.emoji)
+  const [name, setName] = useState(category.name)
+
+  const categoryOptions = useContext(categoryOptionsContext)
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = event.target.value
@@ -12,27 +15,35 @@ const FormCategory = ({ element }: { element: Category }) => {
     if (event.target.name === 'name') setName(newValue)
   }
 
-  console.log(element)
+  useEffect(() => {
+    categoryOptions?.updateCategory(category.id, name, emoji)
+  }, [category.id, emoji, name, categoryOptions])
 
   return (
     <div>
-      <div className='grid grid-cols-5 gap-1.5'>
+      <div className='grid grid-cols-6 gap-1.5'>
         <TextField
-          name='emoji'
+          required
           value={emoji}
+          name='emoji'
           onChange={handleChange}
           className='col-span-1'
           placeholder='😊'
           inputProps={{ maxLength: 2 }}
         />
         <TextField
-          name='name'
+          required
           value={name}
+          name='name'
           onChange={handleChange}
           className='col-span-3'
           placeholder='Categoría'
         />
-        <i className='bx bx-plus bx-md col-span-1 border border-black/20 hover:border-black rounded flex justify-center items-center cursor-pointer'></i>
+        <i className='bx bx-plus bx-sm form-icons'></i>
+        <i
+          className='bx bx-trash bx-sm form-icons '
+          onClick={() => categoryOptions?.deleteCategory(category.id)}
+        ></i>
       </div>
     </div>
   )
