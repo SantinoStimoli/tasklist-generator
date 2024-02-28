@@ -2,6 +2,7 @@ import { Button } from '@mui/material'
 import { Category } from '../interfaces/interfaces'
 import FormCategory from './FormCategory'
 import { FormEvent } from 'react'
+import { copyToClipboard } from '../utils/copyMessage'
 
 const Form = ({ categories }: { categories: Category[] }) => {
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
@@ -9,11 +10,18 @@ const Form = ({ categories }: { categories: Category[] }) => {
     let message = `*Lista* \n.\n`
 
     categories.forEach(category => {
-      const categoryMessage = `~${category.name}~ ${category.emoji}:\n.\n.\n`
+      const categoryMessage = `~${category.name}~ ${category.emoji}:\n`
       message = message + categoryMessage
+      category.items.forEach(item => {
+        const itemMessage = `${item.name} ${item.emoji}\n`
+        message = message + itemMessage
+      })
+      message = message + `.\n.\n`
     })
 
     console.log(message)
+
+    copyToClipboard(message)
   }
 
   return (

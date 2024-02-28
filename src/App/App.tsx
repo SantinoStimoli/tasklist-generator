@@ -25,18 +25,13 @@ const App = () => {
 
   const newCategory = {
     id: newCategoryId,
-    emoji: '🐐',
-    name: 'LACABRA',
+    emoji: '',
+    name: '',
     items: [
       {
-        id: 33,
-        emoji: '🐐',
-        name: 'sss'
-      },
-      {
-        id: 33 + 1,
-        emoji: '🐐',
-        name: '2222'
+        id: newItemId,
+        emoji: '',
+        name: ''
       }
     ]
   }
@@ -106,7 +101,24 @@ const App = () => {
     newName: string,
     newEmoji: string
   ) => {
-    console.log(categoryId, itemId, newName, newEmoji)
+    setCategories(prevCategories => {
+      const selectedCategoryIndex = categories.findIndex(
+        category => category.id === categoryId
+      )
+
+      const selectedCategory = prevCategories[selectedCategoryIndex]
+
+      const selectedItemIndex = selectedCategory.items.findIndex(
+        item => item.id === itemId
+      )
+
+      const selectedItem = selectedCategory.items[selectedItemIndex]
+
+      selectedItem.emoji = newEmoji
+      selectedItem.name = newName
+
+      return prevCategories
+    })
   }
 
   const deleteItemFromCategory = (categoryId: number, itemId: number) => {
@@ -127,7 +139,6 @@ const App = () => {
         )
 
         selectedCategory.items = newItems
-        console.log(selectedCategory)
 
         return prevCategories
       }

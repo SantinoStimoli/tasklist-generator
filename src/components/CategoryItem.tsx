@@ -17,8 +17,25 @@ const CategoryItem = ({
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = event.target.value
-    if (event.target.name === 'emoji') setEmoji(newValue)
-    if (event.target.name === 'name') setName(newValue)
+
+    if (event.target.name === 'emoji') {
+      setEmoji(newValue)
+      categoryOptions?.updateItemFromCategory(
+        categoryId,
+        item.id,
+        name,
+        newValue
+      )
+    }
+    if (event.target.name === 'name') {
+      setName(newValue)
+      categoryOptions?.updateItemFromCategory(
+        categoryId,
+        item.id,
+        newValue,
+        emoji
+      )
+    }
   }
 
   return (
