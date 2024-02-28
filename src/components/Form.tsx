@@ -19,8 +19,6 @@ const Form = ({ categories }: { categories: Category[] }) => {
       message = message + `.\n.\n`
     })
 
-    console.log(message)
-
     copyToClipboard(message)
   }
 

@@ -80,8 +80,8 @@ const App = () => {
             ...newCategories[selectedCategoryIndex].items,
             {
               id: newItemId,
-              emoji: '🐐',
-              name: 's'
+              emoji: '',
+              name: ''
             }
           ]
         }
