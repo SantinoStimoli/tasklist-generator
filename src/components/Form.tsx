@@ -7,13 +7,13 @@ import { copyToClipboard } from '../utils/copyMessage'
 const Form = ({ categories }: { categories: Category[] }) => {
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    let message = `*Lista* \n.\n`
+    let message = `*Lista* ✨\n.\n`
 
     categories.forEach(category => {
-      const categoryMessage = `~${category.name}~ ${category.emoji}:\n`
+      const categoryMessage = `~${category.name.trim()}~ ${category.emoji.trim()}:\n`
       message = message + categoryMessage
       category.items.forEach(item => {
-        const itemMessage = `${item.name} ${item.emoji}\n`
+        const itemMessage = `${item.name.trim()} ${item.emoji.trim()}\n`
         message = message + itemMessage
       })
       message = message + `.\n.\n`
